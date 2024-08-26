@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<style>
+    .group {
+        margin-top: 5px !important;
+    }
+    .table-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+    th {
+        background-color: #f4f4f4;
+    }
+    td {
+        color: #333;
+    }
+    .room-name, .machine-link {
+        color: #007bff;
+        text-decoration: none;
+        text-align: center !important;
+    }
+    .room-name:hover, .machine-link:hover {
+        text-decoration: underline;
+    }
+    .machine-link {
+        background-color: #4cb4cc;
+        color: white;
+        border: 0;
+        border-radius: 4px;
+        padding: 3px 10px;
+    }
+    .machine-link:hover {
+        text-decoration: none;
+        color: white;
+    }
+</style>
+{% endblock %}

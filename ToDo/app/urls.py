@@ -1,6 +1,9 @@
 from django.urls import path
-from .views import to_do
+from .views import to_do,Home
 
 urlpatterns = [
-    path('', to_do, name='submit'),
+    path('', Home, name='home'),
+    path('todo/', to_do, name='todo'),
+
+
 ]
