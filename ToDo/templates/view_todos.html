@@ -3,46 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List</title>
+    <title>View Todos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input[type="text"],
-        textarea {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        input[type="file"] {
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
+        .todo-list {
+            max-width: 1200px;
+            margin: 20px auto;
         }
         table {
             width: 100%;
@@ -59,49 +28,55 @@
         th {
             background-color: #f2f2f2;
         }
-        .todo-list {
-            max-width: 1200px;
-            margin: 20px auto;
+        .add-link {
+            display: block;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
         }
     </style>
 </head>
 <body>
-    <h2>Submit Your Todo</h2>
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-
-        <button type="submit">Submit</button>
-    </form>
-
+    <h2>Todo List</h2>
+    <a href="{% url 'add_todo' %}" class="add-link">Add New Todo</a>
     <div class="todo-list">
-        <h3>Todo List</h3>
         <table>
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Category</th>
                     <th>Note</th>
                     <th>Attached File</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
+                {% load custom_filters %}
                 {% for todo in todos %}
                 <tr>
+                    <td>{{ todo.id }}</td>
                     <td>{{ todo.Name }}</td>
                     <td>{{ todo.Category }}</td>
                     <td>{{ todo.Note }}</td>
                     <td>
                         {% if todo.attached_file %}
-                        <a href="{{ todo.attached_file.url }}">Download</a>
+                        <a href="{{ todo.attached_file.url }}">{{ todo.attached_file.name|filename }}</a>
                         {% else %}
                         No File
                         {% endif %}
+                    </td>                    
+                    <td class="actions">
+                        <a href="{% url 'edit_todo' todo.id %}">Edit</a>
+                        <a href="{% url 'delete_todo' todo.id %}">Delete</a>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4">No todos available.</td>
+                    <td colspan="6">No todos available.</td>
                 </tr>
                 {% endfor %}
             </tbody>

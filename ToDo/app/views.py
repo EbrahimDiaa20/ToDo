@@ -1,22 +1,35 @@
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from .forms import TodoForm
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Todo
+from .forms import TodoForm
 
-
-def Home(request):
-    return render(request, 'home.html')  # Make sure home.html exists in your templates
-
-def to_do(request):
+def add_todo(request):
     if request.method == 'POST':
         form = TodoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('todo')  # Redirect to avoid resubmission on refresh
+            return redirect('view_todos')
     else:
         form = TodoForm()
+    return render(request, 'add_todo.html', {'form': form})
 
-    todos = Todo.objects.all().order_by('-id') 
-    print(f"Number of todos: {todos.count()}")
+def view_todos(request):
+    todos = Todo.objects.all()
+    return render(request, 'view_todos.html', {'todos': todos})
 
-    return render(request, 'todo.html', {'form': form, 'todos': todos})
+def edit_todo(request, todo_id):
+    todo = get_object_or_404(Todo, id=todo_id)
+    if request.method == 'POST':
+        form = TodoForm(request.POST, request.FILES, instance=todo)
+        if form.is_valid():
+            form.save()
+            return redirect('view_todos')
+    else:
+        form = TodoForm(instance=todo)
+    return render(request, 'edit_todo.html', {'form': form, 'todo': todo})
+
+def delete_todo(request, todo_id):
+    todo = get_object_or_404(Todo, id=todo_id)
+    if request.method == 'POST':
+        todo.delete()
+        return redirect('view_todos')
+    return render(request, 'confirm_delete.html', {'todo': todo})

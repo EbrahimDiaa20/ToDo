@@ -9,6 +9,9 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+import environ
+import os
+
 
 from pathlib import Path
 
@@ -70,18 +73,34 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ToDo.wsgi.application'
 
+# Initialize environment variables
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+
+# Read the .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_NAME'),       # Replace with Railway's PostgreSQL database name
+        'USER': env('DB_USER'),       # Replace with Railway's PostgreSQL user
+        'PASSWORD': env('DB_PASSWORD'),   # Replace with Railway's PostgreSQL password
+        'HOST': env('DB_HOST'),       # Replace with Railway's PostgreSQL host
+        'PORT': env('DB_PORT'),       # Replace with Railway's PostgreSQL port
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
