@@ -94,11 +94,11 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),       # Replace with Railway's PostgreSQL database name
-        'USER': env('DB_USER'),       # Replace with Railway's PostgreSQL user
-        'PASSWORD': env('DB_PASSWORD'),   # Replace with Railway's PostgreSQL password
-        'HOST': env('DB_HOST'),       # Replace with Railway's PostgreSQL host
-        'PORT': env('DB_PORT'),       # Replace with Railway's PostgreSQL port
+        'NAME': 'railway',       # Replace with Railway's PostgreSQL database name
+        'USER': 'postgres',       # Replace with Railway's PostgreSQL user
+        'PASSWORD': 'VqEZfugtgDnFSngFVeEZBgJiFLJTZfeE',   # Replace with Railway's PostgreSQL password
+        'HOST': 'postgres.railway.internal',       # Replace with Railway's PostgreSQL host
+        'PORT': '5432',       # Replace with Railway's PostgreSQL port
     }
 }
 # Password validation
