@@ -1,21 +1,37 @@
 # Use an official Python runtime as a parent image
-FROM python:3.12-slim
+FROM python:3.11-slim
 
 # Set the working directory in the container
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy the current directory contents into the container at /usr/src/app
-COPY . .
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Install pipenv or other package manager if needed (optional)
+RUN pip install --upgrade pip
 
-# Expose the port on which the Django app runs
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install Python dependencies from requirements.txt or Pipfile
+COPY requirements.txt /app/
+RUN pip install -r requirements.txt
+
+# Copy your environment file
+COPY .env /app/
+
+# Collect static files
+RUN python manage.py collectstatic --noinput
+
+# Ensure gunicorn is installed
+RUN pip install gunicorn
+
+# Expose port 8000 for the web server
 EXPOSE 8000
 
-# Set environment variables
-ENV DJANGO_SETTINGS_MODULE=ToDo.settings
-ENV PYTHONUNBUFFERED 1
-
-# Run migrations and start Django server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Run the Django application with Gunicorn (you can configure number of workers)
+CMD ["gunicorn", "--workers", "3", "--bind", "0.0.0.0:8000", "ToDo.wsgi:application"]
