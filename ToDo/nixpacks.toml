@@ -5,4 +5,4 @@
   commands = ["python3 -m pip install --upgrade pip", "python3 -m pip install -r requirements.txt"]
 
 [phases.start]
-  commands = ["python3 manage.py migrate", "python3 manage.py runserver 0.0.0.0:8000"]
+commands = ["python3 src/manage.py migrate", "python3 src/manage.py runserver 0.0.0.0:8000"]
