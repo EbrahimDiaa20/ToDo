@@ -1,8 +1,8 @@
 [phases.setup]
-  runtime = "python-3.10.12"
+  runtime = "python-3.9.16"  # Adjust if a different Python version is needed
 
 [phases.build]
-  commands = ["pip install -r requirements.txt"]
+  commands = ["python3 -m pip install --upgrade pip", "python3 -m pip install -r requirements.txt"]
 
 [phases.start]
-  commands = ["python manage.py migrate", "python manage.py runserver 0.0.0.0:8000"]
+  commands = ["python3 manage.py migrate", "python3 manage.py runserver 0.0.0.0:8000"]
