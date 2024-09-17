@@ -1,5 +1,8 @@
+[phases.setup]
+  runtime = "python-3.10.12"
+
 [phases.build]
-cmds = ["pip install -r requirements.txt", "python manage.py migrate"]
+  commands = ["pip install -r requirements.txt"]
 
 [phases.start]
-cmds = ["python manage.py runserver 0.0.0.0:8000"]
+  commands = ["python manage.py migrate", "python manage.py runserver 0.0.0.0:8000"]
