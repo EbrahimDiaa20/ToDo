@@ -22,6 +22,7 @@ DEBUG = env.bool('DEBUG', default=False)
 ALLOWED_HOSTS = ['todo-to-do-033f.up.railway.app', 'localhost', '127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS = ['https://todo-to-do-033f.up.railway.app']
+
 INTERNAL_IPS = [
     '127.0.0.1',
     'localhost:8000'
@@ -92,9 +93,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
