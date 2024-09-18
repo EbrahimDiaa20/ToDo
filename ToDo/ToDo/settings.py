@@ -15,7 +15,7 @@ env = environ.Env(
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Security settings
-SECRET_KEY = env('SECRET_KEY', default='your-secret-key')
+SECRET_KEY = env('SECRET_KEY', default='django-insecure-j43ta0f1_ai=bs6_!fqk(+6-i-wdpw_b84!==z&i6%1z9yh4*f')
 
 DEBUG = env.bool('DEBUG', default=False)
 
