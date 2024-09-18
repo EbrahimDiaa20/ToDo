@@ -19,7 +19,7 @@ SECRET_KEY = env('SECRET_KEY', default='your-secret-key')
 
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['todo-to-do-033f.up.railway.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = ['https://todo-to-do-033f.up.railway.app']
 
@@ -73,7 +73,7 @@ WSGI_APPLICATION = 'ToDo.wsgi.application'
 # Database configuration
 DATABASES = {
     'default': dj_database_url.config(
-        default=env('DATABASE_URL')  # Get DATABASE_URL from environment variables
+        default=os.environ.get('DATABASE_URL')
     )
 }
 
